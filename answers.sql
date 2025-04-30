@@ -2,7 +2,7 @@
 -- we will create a separate table for order products and orders and link them using a foreign key as shown below
 CREATE TABLE Orders (
     OrderID INT PRIMARY KEY,
-    CustomerName VARCHAR(255)
+    CustomerName VARCHAR(50)
 );
 
 
@@ -15,10 +15,15 @@ CREATE TABLE OrderProducts (
 
 
 -- QUESTION 2
--- Here i will create a separate table for Customer details and relating it via OrderID
-CREATE TABLE Customers AS
-SELECT DISTINCT OrderID, CustomerName
-FROM OrderDetails;
--- Next we will drop the customerName column and link the tables via a foreign key
-ALTER TABLE OrderDetails DROP COLUMN CustomerName;
-ALTER TABLE OrderDetails ADD FOREIGN KEY (OrderID) REFERENCES Customers(OrderID);
+-- Here i will create a  table for Customer details and relating it via OrderID and Product Id
+CREATE TABLE Customers (
+    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerName VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
